@@ -12,10 +12,10 @@ COPY . /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 設定環境變數
-ENV PORT=80
+ENV PORT=8080
 
 # 暴露應用程式埠
-EXPOSE 80
+EXPOSE 8080
 
 # 執行應用程式
 CMD ["python", "main.py"]
