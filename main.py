@@ -18,6 +18,11 @@ handler = WebhookHandler(LINE_CHANNEL_SECRET)
 LISTEN_PORT = os.environ.get('PORT', '80')
 
 
+@app.route("/")
+def hello():
+    return "Hello, World!"
+
+
 @app.route("/callback", methods=['POST'])
 def callback():
     # 確認請求來源是否合法
