@@ -38,9 +38,12 @@ def callback():
 # 處理訊息事件
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    # 回應用戶的訊息
-    reply_text = f"你說了: {event.message.text}"
-    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply_text))
+    try:
+        # 回應用戶的訊息
+        reply_text = f"你說了: {event.message.text}"
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply_text))
+    except Exception as e:
+        print(f"Error handling message: {e}")
 
 
 if __name__ == "__main__":
