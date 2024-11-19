@@ -26,7 +26,9 @@ def hello():
 @app.route("/callback", methods=['POST'])
 def callback():
     # 確認請求來源是否合法
-    signature = request.headers['X-Line-Signature']
+    signature = request.headers.get('X-Line-Signature')
+    if not signature:
+        abort(400, "Missing X-Line-Signature")
     body = request.get_data(as_text=True)
     try:
         handler.handle(body, signature)
@@ -38,12 +40,9 @@ def callback():
 # 處理訊息事件
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    try:
-        # 回應用戶的訊息
-        reply_text = f"你說了: {event.message.text}"
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply_text))
-    except Exception as e:
-        print(f"Error handling message: {e}")
+    # 回應用戶的訊息
+    reply_text = f"你說了: {event.message.text}"
+    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply_text))
 
 
 if __name__ == "__main__":
