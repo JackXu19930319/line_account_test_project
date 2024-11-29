@@ -41,8 +41,9 @@ def callback():
 def handle_message(event):
     # 使用者傳來的訊息
     user_message = event.message.text
+    user_id = event.source.user_id
     # 回應訊息
-    reply_message = f"{user_message} send"
+    reply_message = f"你的 User ID 是 {user_id}，你剛才說了：{user_message}"
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply_message))
 
 
